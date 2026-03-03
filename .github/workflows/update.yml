@@ -3,26 +3,27 @@ name: Real-time Crypto Update
 on:
   schedule:
     - cron: '0 * * * *' # 매 정시(1시간마다) 자동으로 실행
-  workflow_dispatch: # 수동으로 즉시 실행 버튼 활성화
+  workflow_dispatch: # 수동 실행 버튼 활성화
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - [cite_start]uses: actions/checkout@v3 # 내 저장소 코드를 가져옴 
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          [cite_start]node-version: '18' # Node.js 환경 설정 [cite: 41]
 
       - name: Run Update Script
-        run: node update_price.js
+        run: node update_price.js # 시세 업데이트 스크립트 실행
 
       - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add README.md
-          git commit -m "Auto-update crypto prices" || echo "No changes to commit"
-          git push
+          # README.md와 index.html 둘 다 변경사항에 추가합니다.
+          git add README.md index.html 
+          git commit -m "Auto-update crypto prices (Markdown & HTML)" || echo "No changes to commit"
+          git push # 변경사항을 GitHub 서버에 저장 [cite: 66]
